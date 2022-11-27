@@ -15,8 +15,6 @@ services:
     restart: always
     env_file:
       - .env
-    environment:
-      POSTGRES_HOST: postgres
     depends_on:
       db:
         condition: service_healthy
@@ -26,6 +24,7 @@ services:
       - "8000:8000"
   migrations:
      build: .
+     image: lenzikeva/skypro_eportnova
      depends_on:
        db:
          condition: service_healthy
@@ -51,7 +50,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-
 
 volumes:
   pg_data:
