@@ -41,3 +41,5 @@ class UpdatePasswordView(generics.UpdateAPIView):
 
     def ger_object(self):
         return self.request.user
+
+
