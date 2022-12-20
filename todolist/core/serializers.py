@@ -16,13 +16,16 @@ class RegistrationSerializer(serializers.ModelSerializer):
     password_repeat = serializers.CharField(write_only=True)
 
     def validate(self, attrs):
+        # if attrs['password'] != attrs['password_repeat']:
+        #     raise ValidationError("password and password_repeat is not equal")
+        # return attrs
         password = attrs.get('attrs')
         password_repeat = attrs.pop('password_repeat')
 
         try:
             validate_password(password)
         except Exception as e:
-            raise serializers.ValidationError({'password': e.messages})
+            raise serializers.ValidationError({'password': e.args[0]})
 
         if password != password_repeat:
             raise serializers.ValidationError("Passwords don't match")
@@ -37,6 +40,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = USER_MODEL
         fields = '__all__'
+
 
 class LoginSerializer(serializers.ModelSerializer):
     username = serializers.CharField(required=True)
@@ -86,3 +90,10 @@ class UpdatePasswordSerializer(serializers.Serializer):
         instance.password = make_password(validated_data['new_password'])
         instance.save(update_fields=('password',))
         return instance
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = USER_MODEL
+        fields = ('id', 'username', 'first_name', 'last_name', 'email')
