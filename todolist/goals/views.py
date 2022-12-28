@@ -110,8 +110,8 @@ class GoalCommentListView(ListAPIView):
     serializer_class = GoalCommentSerializer
     pagination_class = LimitOffsetPagination
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter,]
-    # FilterSet_class = GoalDateFilter
-    filterset_class = GoalDateFilter
+    FilterSet_class = GoalDateFilter
+    # filterset_class = GoalDateFilter
     ordering_fields = ['goal']
     ordering = ['-created']
 
