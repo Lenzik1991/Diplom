@@ -25,8 +25,8 @@ class GoalCategoryListView(ListAPIView):
     serializer_class = GoalCategorySerializer
     pagination_class = LimitOffsetPagination
     filter_backends = [filters.OrderingFilter, filters.SearchFilter, DjangoFilterBackend]
-    FilterSet_fields = ['board']
-    # filterset_fields = ['board']
+    # FilterSet_fields = ['board']
+    filterset_fields = ['board']
     ordering_fields = ['title', 'created']
     ordering = ['title']
     search_fields = ['title']
@@ -66,8 +66,8 @@ class GoalListView(ListAPIView):
     permission_classes = [GoalPermissions]
     serializer_class = GoalSerializer
     pagination_class = LimitOffsetPagination
-    # filterset_class = GoalDateFilter
-    FilterSet_class = GoalDateFilter
+    filterset_class = GoalDateFilter
+    # FilterSet_class = GoalDateFilter
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
     # search_fields = ["title", "description"]
     # ordering = ["priority", "due_date"]
@@ -110,7 +110,8 @@ class GoalCommentListView(ListAPIView):
     serializer_class = GoalCommentSerializer
     pagination_class = LimitOffsetPagination
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter,]
-    FilterSet_class = GoalDateFilter
+    # FilterSet_class = GoalDateFilter
+    filterset_class = GoalDateFilter
     ordering_fields = ['goal']
     ordering = ['-created']
 
