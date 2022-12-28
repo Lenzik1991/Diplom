@@ -4,24 +4,24 @@ from django.utils import timezone
 from core.models import User
 
 
-class BaseModel(models.Model):
-    created = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
-    updated = models.DateTimeField(verbose_name='Дата последнего обновления', auto_now=True)
-
-    class Meta:
-        abstract = True
 # class BaseModel(models.Model):
+#     created = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
+#     updated = models.DateTimeField(verbose_name='Дата последнего обновления', auto_now=True)
+#
 #     class Meta:
 #         abstract = True
-#
-#     created = models.DateTimeField(verbose_name="Дата создания")
-#     updated = models.DateTimeField(verbose_name="Дата последнего обновления")
-#
-#     def save(self, *args, **kwargs):
-#         if not self.id:
-#             self.created = timezone.now()
-#         self.updated = timezone.now()
-#         return super().save(*args, **kwargs)
+class BaseModel(models.Model):
+    class Meta:
+        abstract = True
+
+    created = models.DateTimeField(verbose_name="Дата создания")
+    updated = models.DateTimeField(verbose_name="Дата последнего обновления")
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        self.updated = timezone.now()
+        return super().save(*args, **kwargs)
 
 
 class Board(BaseModel):
@@ -31,6 +31,9 @@ class Board(BaseModel):
 
     title = models.CharField(verbose_name="Название", max_length=255)
     is_deleted = models.BooleanField(verbose_name="Удалена", default=False)
+
+    def __str__(self):
+        return self.title
 
 
 class BoardParticipant(BaseModel):
@@ -85,8 +88,8 @@ class Goal(BaseModel):
     user = models.ForeignKey('core.User', verbose_name='Автор', on_delete=models.PROTECT, related_name='goals')
     category = models.ForeignKey(GoalCategory, verbose_name='Категория', related_name='goals', on_delete=models.CASCADE)
 
-    # def __str__(self):
-    #     return self.title
+    def __str__(self):
+        return self.title
 
 
 class GoalComment(BaseModel):
@@ -99,8 +102,8 @@ class GoalComment(BaseModel):
     goal = models.ForeignKey(Goal, verbose_name='Цель', on_delete=models.PROTECT, related_name='comments')
     text = models.TextField(verbose_name='Текст')
 
-    # def __str__(self):
-    #     return self.text
+    def __str__(self):
+        return self.text
 
 # from django.db import models
 # from django.utils import timezone
