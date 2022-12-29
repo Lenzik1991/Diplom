@@ -51,14 +51,6 @@ class GoalCreateSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ('id', 'created', 'updated', 'user')
 
-    # def validate_category(self, value):
-    #     if value.is_deleted:
-    #         raise serializers.ValidationError("not allowed in deleted category")
-    #
-    #     if value.user != self.context["request"].user:
-    #         raise serializers.ValidationError("not owner of category")
-    #
-    #     return value
     def validate_category(self, value: GoalCategory):
         if value.is_deleted:
             raise serializers.ValidationError('Запрещено в удаленной категории')
@@ -92,13 +84,6 @@ class GoalSerializer(serializers.ModelSerializer):
         if value.user != self.context['request'].user:
             raise serializers.ValidationError('not owner of category')
         return value
-
-    # def validate_category(self, value):
-    #
-    #     if value.user != self.context['request'].user:
-    #         raise serializers.ValidationError('not owner of category')
-    #
-    #     return value
 
 
 class GoalCommentCreateSerializer(serializers.ModelSerializer):

@@ -9,8 +9,7 @@ from goals.filters import GoalDateFilter
 from goals.models import GoalCategory, Goal, GoalComment, Board
 from goals.permissions import BoardPermissions, GoalPermissions, GoalCategoryPermissions, CommentsPermissions
 from goals.serializers import GoalCreateSerializer, GoalCategorySerializer, GoalCategoryCreateSerializer, \
-    GoalSerializer, GoalCommentCreateSerializer, GoalCommentSerializer, BoardSerializer, BoardCreateSerializer, \
-    BoardListSerializer
+    GoalSerializer, GoalCommentCreateSerializer, GoalCommentSerializer, BoardSerializer, BoardCreateSerializer
 
 
 class GoalCategoryCreateView(CreateAPIView):
@@ -25,7 +24,6 @@ class GoalCategoryListView(ListAPIView):
     serializer_class = GoalCategorySerializer
     pagination_class = LimitOffsetPagination
     filter_backends = [filters.OrderingFilter, filters.SearchFilter, DjangoFilterBackend]
-    # FilterSet_fields = ['board']
     filterset_fields = ['board']
     ordering_fields = ['title', 'created']
     ordering = ['title']
@@ -67,11 +65,7 @@ class GoalListView(ListAPIView):
     serializer_class = GoalSerializer
     pagination_class = LimitOffsetPagination
     filterset_class = GoalDateFilter
-    # FilterSet_class = GoalDateFilter
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
-    # search_fields = ["title", "description"]
-    # ordering = ["priority", "due_date"]
-    # ordering_fields = ["priority", "due_date"]
     ordering_fields = ['title', 'created']
     ordering = ['title']
     search_fields = ['title']
@@ -111,7 +105,6 @@ class GoalCommentListView(ListAPIView):
     pagination_class = LimitOffsetPagination
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter,]
     FilterSet_class = GoalDateFilter
-    # filterset_class = GoalDateFilter
     ordering_fields = ['goal']
     ordering = ['-created']
 
@@ -140,10 +133,8 @@ class BoardCreateView(CreateAPIView):
 class BoardListView(ListAPIView):
     model = Board
     permission_classes = [BoardPermissions]
-    # serializer_class = BoardListSerializer
     serializer_class = BoardSerializer
     pagination_class = LimitOffsetPagination
-    # filter_backends = [filters.OrderingFilter]
     ordering = ['title']
 
     def get_queryset(self):
