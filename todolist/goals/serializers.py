@@ -11,7 +11,7 @@ class GoalCategoryCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GoalCategory
-        read_only_fields = ("id", "created", "updated", "user")
+        read_only_fields = ("id", "created", "updated", "user", "board")
         fields = "__all__"
 
     def validate_board(self, value: Board):
@@ -34,6 +34,12 @@ class GoalCategorySerializer(serializers.ModelSerializer):
         model = GoalCategory
         fields = '__all__'
         read_only_fields = ('id', 'created', 'updated', 'user', 'board')
+
+    def update(self, instance, validated_data):
+        board = validated_data.get("board")
+        if instance.board.id != board.id:
+            raise serializers.ValidationError("Cannot change board of category")
+        return super().update(instance, validated_data)
 
 
 class GoalCreateSerializer(serializers.ModelSerializer):
