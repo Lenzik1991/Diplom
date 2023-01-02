@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 import environ
 
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'social_django',
     'goals',
     'django_filters',
+    'bot',
 ]
 
 MIDDLEWARE = [
@@ -168,6 +169,7 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend'
     )
 }
+TG_BOT_API_TOKEN = os.getenv('TG_BOT_API_TOKEN')
 
 
 # CORS_ALLOW_ALL_ORIGINS = True
